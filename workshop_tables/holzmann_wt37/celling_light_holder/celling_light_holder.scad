@@ -5,8 +5,7 @@ FIRST_CHUNK = 50;
 SECOND_CHUNK = FIRST_CHUNK + 75;
 
 module main(){
-  difference()
-    {
+  difference(){
     board_layers();
     horizontal_screws();
   }
@@ -22,7 +21,7 @@ module board_layers(){
 
 module horizontal_screws(){
   SCREW_OFFSET = 5;
-  SCREW_LENGTH = 20;
+  SCREW_LENGTH = 15;
   SCREW_SIZE = SCREW_LENGTH + SCREW_OFFSET;
   NUT_LENGTH = BOARD_DEPTH - SCREW_LENGTH + SCREW_OFFSET;
   
