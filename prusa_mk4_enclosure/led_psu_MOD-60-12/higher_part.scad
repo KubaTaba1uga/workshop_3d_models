@@ -14,7 +14,6 @@ module main(){
 }
 
 module base(){
-  // First layer
   linear_extrude(LAYER_HEIGHT)  
   difference(){
     translate([-OFFSET, -OFFSET])
@@ -37,7 +36,7 @@ module high_low_connector(){
       }
     }
 
-    // Second layer
+  // Second layer
   translate([0,0, PSU_HEIGHT/2]) {
     linear_extrude(PSU_HEIGHT/2 + 5){
       difference(){
