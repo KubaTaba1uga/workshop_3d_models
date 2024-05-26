@@ -1,9 +1,10 @@
 BOARD_WIDTH = 85;
 BOARD_DEPTH = 56;
 BOARD_HEIGHT = 30;
-HOLE_DIAMETER = 2.7;
+HOLE_DIAMETER = 1.35;
 HOLE_DISTANCE_FROM_VERTEX = 2.15;
 SPACE_WIDTH_BETWEEN_HOLES = 58;
+SPACE_DEPTH_BETWEEN_HOLES = 49;
 BIG_OFFSET = 5;
 
 ENCLOSURE_LAYER = 4;
@@ -26,21 +27,26 @@ module board_base_with_holders(){
 }
 
 module holders_pair(){
-  translate([HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, 0])
-  board_holder();
+  translate([HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, 0]){
+    board_holder();
+    
+    translate([0, SPACE_DEPTH_BETWEEN_HOLES, 0])    
+    board_holder();  
+  }
 
-  translate([HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, BOARD_DEPTH - (HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE), 0])
-  board_holder();  
+
+
+
 }
 
 module board_base(){
   linear_extrude(ENCLOSURE_LAYER)
     translate([-BIG_OFFSET/2, -BIG_OFFSET/2])
-  square([BOARD_WIDTH + BIG_OFFSET, BOARD_DEPTH + BIG_OFFSET]);
+    square([BOARD_WIDTH + BIG_OFFSET, BOARD_DEPTH + BIG_OFFSET]);
 }
 
 module board_holder(){
-  cylinder(r1=HOLDER_BASE, r2=0, h=BOARD_HEIGHT);
+  cylinder(r1=HOLDER_BASE, r2=1, h=BOARD_HEIGHT/1.5);
 }
 
 main();
