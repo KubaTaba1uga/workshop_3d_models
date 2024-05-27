@@ -42,7 +42,8 @@ def clean(c, bytecode=False, extra=""):
         patterns.append(extra)
 
     for pattern in patterns:
-        c.run("rm -rf {}".format(pattern))
+        _pr_info("Removing pattern {}".format(pattern))
+        c.run("rm -vrf {}".format(pattern))
 
 
 @task
@@ -63,7 +64,7 @@ def build(c, files_to_build: list = []):
         inv build --files-to-build=example1.scad,example2.scad
     """
     if not _command_exists(CC):
-        print(f"{CC} need to be installed!")
+        _pr_error(f"{CC} need to be installed!")
         exit(-1)
 
     scad_files = _list_scad_files_recursively(SRC_PATH)
@@ -76,9 +77,11 @@ def build(c, files_to_build: list = []):
         ):
             continue
 
+        _pr_info("Generating .stl file for {}".format(os.path.basename(file_path)))
+
         command = "openscad -o {} {}".format(_generate_build_name(file_path), file_path)
-        print(command)
         c.run(command)
+
         print()
 
 
@@ -141,3 +144,55 @@ def _cut_path_to_directory(full_path, target_directory):
 
     target_index = parts.index(target_directory)
     return os.sep.join(parts[: target_index + 1])
+
+
+def _pr_info(message: str):
+    """
+    Print an informational message in blue color.
+
+    Args:
+        message (str): The message to print.
+
+    Usage:
+        pr_info("This is an info message.")
+    """
+    print(f"\033[94m[INFO] {message}\033[0m")
+
+
+def _pr_warn(message: str):
+    """
+    Print a warning message in yellow color.
+
+    Args:
+        message (str): The message to print.
+
+    Usage:
+        pr_warn("This is a warning message.")
+    """
+    print(f"\033[93m[WARN] {message}\033[0m")
+
+
+def _pr_debug(message: str):
+    """
+    Print a debug message in cyan color.
+
+    Args:
+        message (str): The message to print.
+
+    Usage:
+        pr_debug("This is a debug message.")
+    """
+    print(f"\033[96m[DEBUG] {message}\033[0m")
+
+
+def _pr_error(message: str):
+    """
+    Print an error message in red color.
+
+    Args:
+        message (str): The message to print.
+
+    Usage:
+        pr_error("This is an error message.")
+    """
+    print(f"\033[91m[ERROR] {message}\033[0m")
