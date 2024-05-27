@@ -12,6 +12,7 @@ from invoke import task
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 SRC_PATH = os.path.join(ROOT_PATH, "src")
 BUILD_PATH = os.path.join(ROOT_PATH, "build")
+SHARED_PATH = os.path.join(ROOT_PATH, "shared")
 CC = "openscad"
 
 
@@ -25,7 +26,6 @@ def clean(c, bytecode=False, extra=""):
     bytecode files.
 
     Args:
-        c (invoke.context.Context): The context instance (automatically passed in by invoke).
         bytecode (bool, optional): If True, also removes Python bytecode files (.pyc). Defaults to False.
         extra (str, optional): Additional pattern to remove. Defaults to "".
 
@@ -56,7 +56,6 @@ def build(c, files_to_build: list = []):
     If a list of specific files is provided, only those files will be built.
 
     Args:
-        c (invoke.context.Context): The context instance (automatically passed in by invoke).
         files_to_build (list, optional): List of specific OpenSCAD files to build. Defaults to [].
 
     Usage:
@@ -196,3 +195,25 @@ def _pr_error(message: str):
         pr_error("This is an error message.")
     """
     print(f"\033[91m[ERROR] {message}\033[0m")
+
+
+###############################################
+#                Internals                    #
+###############################################
+def _add_directory_to_path(directory):
+    """
+    Add the specified directory to the PATH environment variable.
+
+    Args:
+        directory (str): The directory to add to PATH.
+
+    Usage:
+        add_directory_to_path("/path/to/directory")
+    """
+    current_path = os.environ.get("PATH", "")
+
+    if directory not in current_path.split(os.pathsep):
+        os.environ["PATH"] = directory + os.pathsep + current_path
+
+
+_add_directory_to_path(SHARED_PATH)
