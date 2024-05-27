@@ -12,14 +12,15 @@ This repository contains 3D models created for various workshop projects. The mo
 
 ## Installation
 
-1. Clone the repository:
-    `bash
+1. Clone the repository:  
+    ```bash
     git clone https://github.com/KubaTaba1uga/workshop_3d_models.git
-    `
-2. Navigate to the project directory:
-    `bash
+    ```
+2. Navigate to the project directory:  
+    ```bash
     cd workshop_3d_models
-    `
+    ```
+	
 ## Usage
 
 Activate virtual environment
