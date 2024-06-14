@@ -1,8 +1,8 @@
 include <BOSL2/std.scad>
 include <BOSL2/screws.scad>
 
-CONNECTOR_X = 10;
-CONNECTOR_Y = 10;
+CONNECTOR_X = 15;
+CONNECTOR_Y = 15;
 CONNECTOR_Z = 40;
 
 LEVEL_X = 120 + CONNECTOR_X * 2;

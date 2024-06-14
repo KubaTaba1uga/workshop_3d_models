@@ -1,3 +1,4 @@
+# TO-DO create task for downloading libs
 ###############################################
 #                Imports                      #
 ###############################################
@@ -62,6 +63,8 @@ def build(c, files_to_build: list = []):
         inv build
         inv build --files-to-build=example1.scad,example2.scad
     """
+    _write_libs_path_to_envs()
+
     if not _command_exists(CC):
         _pr_error(f"{CC} need to be installed!")
         exit(-1)
@@ -98,7 +101,7 @@ def open(c, file_path: str):
     Usage:
         inv open-file --file-path=example.scad
     """
-    os.environ["OPENSCADPATH"] = SHARED_PATH
+    _write_libs_path_to_envs()
 
     if not os.path.isfile(file_path):
         _pr_error(f"File {file_path} does not exist!")
@@ -248,6 +251,10 @@ def _add_directory_to_path(directory):
 
     if directory not in current_path.split(os.pathsep):
         os.environ["PATH"] = directory + os.pathsep + current_path
+
+
+def _write_libs_path_to_envs():
+    os.environ["OPENSCADPATH"] = SHARED_PATH
 
 
 _add_directory_to_path(SHARED_PATH)
