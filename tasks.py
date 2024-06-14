@@ -12,7 +12,7 @@ from invoke import task
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 SRC_PATH = os.path.join(ROOT_PATH, "src")
 BUILD_PATH = os.path.join(ROOT_PATH, "build")
-SHARED_PATH = os.path.join(ROOT_PATH, "shared")
+SHARED_PATH = os.path.join(ROOT_PATH, "libs")
 CC = "openscad"
 
 
@@ -78,10 +78,42 @@ def build(c, files_to_build: list = []):
 
         _pr_info("Generating .stl file for {}".format(os.path.basename(file_path)))
 
-        command = "openscad -o {} {}".format(_generate_build_name(file_path), file_path)
+        command = "{} -o {} {}".format(CC, _generate_build_name(file_path), file_path)
+
         c.run(command)
 
         print()
+
+
+@task
+def open(c, file_path: str):
+    """
+    Open an OpenSCAD file in OpenSCAD.
+
+    This task opens a specified OpenSCAD file using the OpenSCAD application.
+
+    Args:
+        file_path (str): The path to the OpenSCAD file to open.
+
+    Usage:
+        inv open-file --file-path=example.scad
+    """
+    if not os.path.isfile(file_path):
+        _pr_error(f"File {file_path} does not exist!")
+        return
+
+    if _get_file_extension(file_path) != _SCAD_EXTENSION:
+        _pr_error(f"File {file_path} is not an OpenSCAD file!")
+        return
+
+    if not _command_exists(CC):
+        _pr_error(f"{CC} needs to be installed!")
+        return
+
+    _pr_info(f"Opening {file_path} in OpenSCAD")
+
+    command = f"{CC} {file_path}"
+    c.run(command)
 
 
 ###############################################

@@ -24,7 +24,7 @@ module connector(){
     difference(){
       square([CONNECTOR_WIDTH, CONNECTOR_HEIGHT]);
       translate([CONNECTOR_WIDTH/2, CONNECTOR_HEIGHT/2])
-      m4_6_nut_2d();
+      m4_nut_2d();
     }
   }
 
@@ -33,7 +33,7 @@ module connector(){
     difference(){
       square([CONNECTOR_WIDTH, CONNECTOR_HEIGHT]);
       translate([CONNECTOR_WIDTH/2, CONNECTOR_HEIGHT/2])
-      m4_6_screw_2d();
+      m4_screw_2d();
     }
   }
 }
@@ -44,9 +44,9 @@ module hanger(){
     difference(){
       square([HANGER_WIDTH, HANGER_HEIGHT]);
       translate([HANGER_WIDTH/2, HANGER_FIRST_HOLE])
-      m4_6_nut_2d();
+      m4_nut_2d();
       translate([HANGER_WIDTH/2, HANGER_SECOND_HOLE])
-      m4_6_nut_2d();      
+      m4_nut_2d();      
     }
   }
 
@@ -55,32 +55,32 @@ module hanger(){
     difference(){
       square([HANGER_WIDTH, HANGER_HEIGHT]);
       translate([HANGER_WIDTH/2, HANGER_FIRST_HOLE])
-      m4_6_screw_2d();
+      m4_screw_2d();
       translate([HANGER_WIDTH/2, HANGER_SECOND_HOLE])
-      m4_6_screw_2d();      
+      m4_screw_2d();      
     }
   }
   
 }
 
-module m4_6_screw_2d(){
+module m4_screw_2d(){
   $fn = 100;
   circle(2);
 }
 
 
-module m4_6_screw_3d(length){
+module m4_screw_3d(length){
   linear_extrude(length)
-    m4_6_screw_2d();
+    m4_screw_2d();
 }
 
-module m4_6_nut_2d(){
+module m4_nut_2d(){
   $fn = 6;
   circle(4.1);
 }
-module m4_6_nut_3d(length){
+module m4_nut_3d(length){
   linear_extrude(length)
-  m4_6_nut_2d();
+  m4_nut_2d();
 }
 
 
