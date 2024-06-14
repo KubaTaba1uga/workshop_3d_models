@@ -98,6 +98,8 @@ def open(c, file_path: str):
     Usage:
         inv open-file --file-path=example.scad
     """
+    os.environ["OPENSCADPATH"] = SHARED_PATH
+
     if not os.path.isfile(file_path):
         _pr_error(f"File {file_path} does not exist!")
         return
