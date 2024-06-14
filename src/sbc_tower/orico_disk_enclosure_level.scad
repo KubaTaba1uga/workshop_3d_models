@@ -16,7 +16,7 @@ _connectors_coordinates = [[0,0,0], [0, LEVEL_Y - CONNECTOR_Y, 0], [LEVEL_X - CO
 module main(){
   difference(){
     platform_with_connectors();    
-    nut_holes();
+    holes();
   }
 
   
@@ -31,7 +31,7 @@ module platform_with_connectors(){
 
 }
 
-module nut_holes(){
+module holes(){
   offset = 1;
   for (i = [0:3]){ 
     translate(_connectors_coordinates[i]){
