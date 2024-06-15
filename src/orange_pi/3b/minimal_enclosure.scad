@@ -1,14 +1,7 @@
-BOARD_WIDTH = 85;
-BOARD_DEPTH = 56;
-BOARD_HEIGHT = 30;
-HOLE_DIAMETER = 1.35;
-HOLE_DISTANCE_FROM_VERTEX = 2.15;
-SPACE_WIDTH_BETWEEN_HOLES = 58;
-SPACE_DEPTH_BETWEEN_HOLES = 49;
-BIG_OFFSET = 5;
+include <my_own_lib/orange_pi_3b.scad>
 
+BIG_OFFSET = 20;
 ENCLOSURE_LAYER = 4;
-HOLDER_BASE = HOLE_DIAMETER + 1;
 
 module main(){
   board_base_with_holders();
@@ -19,25 +12,8 @@ module board_base_with_holders(){
   board_base();
 
   holders_pair();
-
-  translate([SPACE_WIDTH_BETWEEN_HOLES, 0, 0])
-  holders_pair();  
-  
-  
 }
 
-module holders_pair(){
-  translate([HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, HOLE_DISTANCE_FROM_VERTEX + HOLDER_BASE, 0]){
-    board_holder();
-    
-    translate([0, SPACE_DEPTH_BETWEEN_HOLES, 0])    
-    board_holder();  
-  }
-
-
-
-
-}
 
 module board_base(){
   linear_extrude(ENCLOSURE_LAYER)
@@ -45,8 +21,5 @@ module board_base(){
     square([BOARD_WIDTH + BIG_OFFSET, BOARD_DEPTH + BIG_OFFSET]);
 }
 
-module board_holder(){
-  cylinder(r1=HOLDER_BASE, r2=1, h=BOARD_HEIGHT/1.5);
-}
 
 main();
