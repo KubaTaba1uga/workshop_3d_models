@@ -88,18 +88,24 @@ module base(){
     square([BASE_X, BASE_Y]);
   }
 
-  offset = 0.2;
-  for (i = [0 : len(UPPER_CONNECTORS_COORDINATES) - 1]){
-    coordinates = [UPPER_CONNECTORS_COORDINATES[i][0]-CONNECTOR_OFFSET_X_Y, UPPER_CONNECTORS_COORDINATES[i][1]-CONNECTOR_OFFSET_X_Y, BASE_Z-offset];
-    translate(coordinates){
-      linear_extrude(CONNECTOR_Z){
-	square(CONNECTOR_X_Y - offset);
-      }
-     }
-  }  
+  upper_level_connectors();
 
   translate([BASE_OFFSET_X, BASE_OFFSET_Y, 0])
   pcb_distances();
+}
+
+module upper_level_connectors(){
+  offset = 0.2;
+  for (i = [0 : len(UPPER_CONNECTORS_COORDINATES) - 1]){
+    _offset = i%2==0 ? 0 : offset;
+    
+    coordinates = [UPPER_CONNECTORS_COORDINATES[i][0]-CONNECTOR_OFFSET_X_Y, UPPER_CONNECTORS_COORDINATES[i][1]-CONNECTOR_OFFSET_X_Y+_offset, BASE_Z-offset];
+    translate(coordinates){
+      linear_extrude(CONNECTOR_Z){
+	square([CONNECTOR_X_Y, CONNECTOR_X_Y - offset]);
+      }
+     }
+  }    
 }
 
 module pcb_distances(){
@@ -126,7 +132,5 @@ module pcb_board(){
     }
   }
 }
-
-
 
 main();
