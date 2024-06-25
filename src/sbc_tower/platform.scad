@@ -9,10 +9,12 @@ CONNECTORS_COORDINATES_ODD = [[CONNECTOR_X, 0, 0], [CONNECTOR_X, LEVEL_Y - CONNE
 
 module platform(level_number, connector_z){
   connectors_coordinates = (level_number % 2 == 1) ? CONNECTORS_COORDINATES_ODD : CONNECTORS_COORDINATES_EVEN;
-    
+  holes_coordinates = (level_number % 2 == 1) ? CONNECTORS_COORDINATES_EVEN : CONNECTORS_COORDINATES_ODD;
+  
   difference(){
       _platform_with_connectors(connectors_coordinates ,connector_z);    
       _nuts(connectors_coordinates, connector_z);
+      _holes(holes_coordinates);
   }
 }
 
@@ -42,14 +44,23 @@ module _nuts(connectors_coordinates, connector_z){
     translate(connectors_coordinates[i]){
       
       translate([CONNECTOR_X/2, CONNECTOR_Y/2, -offset]){
-	nut_trap_inline(h=connector_z - LEVEL_Z + offset, spec="M4", $slop=.1);
+	nut_trap_inline(h=connector_z - LEVEL_Z + offset, spec="M4", $slop=.05);
 
-	translate([0,0, offset+connector_z])
+	translate([0, 0, offset+connector_z])
 	screw_hole("M4,10",atype="shaft");
       }
     }
   }
 }
 
+module _holes(holes_coordinates){
+  offset = 1;
+  for (i = [0:3]){
+    translate([CONNECTOR_X/2, CONNECTOR_Y/2, 0]){
+      translate(holes_coordinates[i])
+	screw_hole("M4,10",atype="shaft");
+   }
+  }
+}
 
 
