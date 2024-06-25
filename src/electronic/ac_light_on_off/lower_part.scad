@@ -14,15 +14,23 @@ BASE_OFFSET_Y = 15;
 BASE_X = PCB_BOARD_X + BASE_OFFSET_X*2;
 BASE_Y = PCB_BOARD_Y + BASE_OFFSET_Y*2;
 BASE_Z = 4;
-CONNECTOR_OFFSET_X_Y = BASE_OFFSET_Y/2;
-UPPER_CONNECTORS_COORDINATES = [[CONNECTOR_OFFSET_X_Y, CONNECTOR_OFFSET_X_Y, 0], [CONNECTOR_OFFSET_X_Y, BASE_Y - CONNECTOR_OFFSET_X_Y, 0], [BASE_X - CONNECTOR_OFFSET_X_Y, CONNECTOR_OFFSET_X_Y, 0], [BASE_X - CONNECTOR_OFFSET_X_Y, BASE_Y - CONNECTOR_OFFSET_X_Y, 0]];
-LOWER_CONNECTORS_COORDINATES = [[0,0,0]];
-PCB_CONNECTORS_COORDINATES = [[0,0,0]];
+CONNECTOR_X_Y = BASE_OFFSET_Y;
+CONNECTOR_OFFSET_X_Y = CONNECTOR_X_Y/2;
+CONNECTOR_Z = 30;
+UPPER_CONNECTORS_COORDINATES = [[CONNECTOR_OFFSET_X_Y, CONNECTOR_OFFSET_X_Y, 0],
+				[CONNECTOR_OFFSET_X_Y, BASE_Y - CONNECTOR_OFFSET_X_Y, 0],
+				[BASE_X - CONNECTOR_OFFSET_X_Y, CONNECTOR_OFFSET_X_Y, 0],
+				[BASE_X - CONNECTOR_OFFSET_X_Y, BASE_Y - CONNECTOR_OFFSET_X_Y, 0]];
+LOWER_CONNECTORS_COORDINATES = [[BASE_X/2, BASE_Y/2, 0]];
+PCB_CONNECTORS_COORDINATES = PCB_HOLES_COORDINATES;
+
+DISTANCE_Z = 5;
+Z_OFFSET = 1.5;
 
 module main(){
   base_with_connectors();
 
-  translate([BASE_OFFSET_X, BASE_OFFSET_Y, BASE_Z])
+  translate([BASE_OFFSET_X, BASE_OFFSET_Y, BASE_Z + DISTANCE_Z])
   %pcb_board();
 }
 
@@ -31,7 +39,11 @@ module base_with_connectors(){
   
   difference(){
     base();
-    upper_connectors();    
+    upper_connectors();
+    lower_connectors();
+    
+    translate([BASE_OFFSET_X, BASE_OFFSET_Y, BASE_Z])    
+    pcb_connectors();
   }
 }
 
@@ -41,8 +53,32 @@ module upper_connectors(){
   for (i = [0 : len(UPPER_CONNECTORS_COORDINATES) - 1]){
     coordinates = [UPPER_CONNECTORS_COORDINATES[i][0], UPPER_CONNECTORS_COORDINATES[i][1], -offset];
     translate(coordinates){
+       screw_hole("M4,100",atype="shaft");
+       nut_trap_inline(h=CONNECTOR_Z + BASE_Z - Z_OFFSET + offset, spec="M4", $slop=.05);
+     }
+  }
+}
+
+module lower_connectors(){
+  offset = 0.1;
+
+  for (i = [0 : len(LOWER_CONNECTORS_COORDINATES) - 1]){
+    coordinates = [LOWER_CONNECTORS_COORDINATES[i][0], LOWER_CONNECTORS_COORDINATES[i][1], -offset];
+    translate(coordinates){
        screw_hole("M4,10",atype="shaft");
-       nut_trap_inline(h=BASE_Z - 1 + offset, spec="M4", $slop=.05);      
+       translate([0,0,Z_OFFSET + offset])
+       nut_trap_inline(h=BASE_Z - Z_OFFSET + offset, spec="M4", $slop=.05);      
+     }
+  }
+}
+
+module pcb_connectors(){
+  offset = 0.1;
+
+  for (i = [0 : len(PCB_CONNECTORS_COORDINATES) - 1]){
+    coordinates = [PCB_CONNECTORS_COORDINATES[i][0], PCB_CONNECTORS_COORDINATES[i][1], -offset];
+    translate(coordinates){
+       screw_hole("M3,10",atype="shaft");
      }
   }
 }
@@ -51,6 +87,30 @@ module base(){
   linear_extrude(BASE_Z){
     square([BASE_X, BASE_Y]);
   }
+
+  offset = 0.2;
+  for (i = [0 : len(UPPER_CONNECTORS_COORDINATES) - 1]){
+    coordinates = [UPPER_CONNECTORS_COORDINATES[i][0]-CONNECTOR_OFFSET_X_Y, UPPER_CONNECTORS_COORDINATES[i][1]-CONNECTOR_OFFSET_X_Y, BASE_Z-offset];
+    translate(coordinates){
+      linear_extrude(CONNECTOR_Z){
+	square(CONNECTOR_X_Y - offset);
+      }
+     }
+  }  
+
+  translate([BASE_OFFSET_X, BASE_OFFSET_Y, 0])
+  pcb_distances();
+}
+
+module pcb_distances(){
+  offset = 0.1;
+  
+  for (i = [0 : len(PCB_CONNECTORS_COORDINATES) - 1]){
+    coordinates = [PCB_CONNECTORS_COORDINATES[i][0], PCB_CONNECTORS_COORDINATES[i][1], BASE_Z - offset];
+    translate(coordinates){
+      cylinder(r=2.5, h=DISTANCE_Z);
+     }
+  }  
 }
 
 module pcb_board(){
