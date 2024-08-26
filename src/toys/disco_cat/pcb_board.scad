@@ -12,7 +12,7 @@ CONNECTOR_HOLE_R = 1 - 0.01;
 module pcb_connector_hole(){
   $fn = 100;
   
-  hole_z = 6;
+  hole_z = 25;
   
   for (i = [0 : len(PCB_HOLES_COORDINATES) - 1]){
     translate(PCB_HOLES_COORDINATES[i])
