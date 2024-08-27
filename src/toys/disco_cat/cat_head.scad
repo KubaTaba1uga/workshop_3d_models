@@ -11,15 +11,11 @@ module main(){
     lionhead();
     head_holes();
   }
-
-  translate([20,10,-40])
-  rotate([0,270,0])
-  head_stand();
-
-  // test_head_hole();
 }
 
 module lionhead(){
+  translate([-36,5,20])
+  cube([72, 9, 100]);
   translate([0,-30,0])
   scale([2.5,2.5,2.5])
   import("lionhead.stl");  
@@ -44,7 +40,7 @@ module head_stand(){
   
     equilateral_triangle(STAND_X);
 
-    translate([STAND_X/2.5, -STAND_X/2.5, STAND_Z])    
+    translate([STAND_X/2.5, -STAND_X/2, STAND_Z])    
       rotate([90,90,180]){
       head_stand_holes();
     }
@@ -99,7 +95,7 @@ module led_holes(){
   
       linear_extrude(square_z*12){  
 	translate([square_x/2, square_y/2, 0])
-	  circle(r=2.5);
+	  circle(r=2.6);
       }
 
       linear_extrude(square_z*11){  
@@ -123,7 +119,7 @@ module test_head_hole(){
     square([square_x,square_y]);
 
     translate([square_x/2, square_y/2, 0])
-      circle(r=2.5);
+      circle(r=2.6);
   }  
 }
 
