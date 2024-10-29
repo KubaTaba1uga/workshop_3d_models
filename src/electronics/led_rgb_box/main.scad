@@ -17,15 +17,17 @@ module main(){
     box_lid();
 
     for (i = [0 : len(parts) - 1]) {
-      translate([2+30*i,2,0]){
+      translate([2+30*i,4,0]){
 	button_hole(parts[i][0][0], parts[i][0][1]);
       }
     }
   }
 
   for (i = [0 : len(parts) - 1]) {
-    translate([28+i*29.8,12,0.5]){
+    translate([28+i*29.8,12,BOX_LID_Z-0.1]){
+      linear_extrude(1){
       text(parts[i][1], size = 5, valign = "center", halign = "center"); // adjust size as needed
+      }
     }
   }
   
@@ -33,7 +35,7 @@ module main(){
 
 module box_lid(){
   BOX_LID_X = 185;
-  BOX_LID_Y = 30;
+  BOX_LID_Y = 34;
 
   linear_extrude(BOX_LID_Z){
     square([BOX_LID_X, BOX_LID_Y]);
