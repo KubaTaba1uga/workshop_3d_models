@@ -1,0 +1,3 @@
+STAND_X = 10;
+STAND_Z = 1.5;
+STAND_Y = 50;
