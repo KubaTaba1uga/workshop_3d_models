@@ -1,1 +1,1 @@
-BOX_LID_Z = 1;
+BOX_LID_Z = 2;

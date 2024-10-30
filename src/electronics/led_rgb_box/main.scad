@@ -3,12 +3,10 @@ include <button_hole.scad>
 
 module main(){
   parts = [
-	   [[0.7, 0.7],  "1"],
-	   [[0.85,0.85], "2"],
-	   [[1,1],       "3"],
-	   [[1.1,1.1],   "4"],
-	   [[1.2,1.2],   "5"],
-	   [[1.3,1.3],   "6"],	   	   
+	   [[1.5,0.6],   "1"],
+	   [[1.6,0.6],   "2"],
+	   [[1.7,0.6],   "3"],
+	   [[1.8,0.6],   "4"],	   	   	   	   
   ];
 
   difference(){
@@ -22,7 +20,7 @@ module main(){
   }
 
   for (i = [0 : len(parts) - 1]) {
-    translate([28+i*29.8,12,BOX_LID_Z-0.1]){
+    translate([28+i*30.2,12,BOX_LID_Z-0.1]){
       linear_extrude(1){
       text(parts[i][1], size = 5, valign = "center", halign = "center"); // adjust size as needed
       }
@@ -32,7 +30,7 @@ module main(){
 }
 
 module box_lid(){
-  BOX_LID_X = 185;
+  BOX_LID_X = 122;
   BOX_LID_Y = 34;
 
   linear_extrude(BOX_LID_Z){

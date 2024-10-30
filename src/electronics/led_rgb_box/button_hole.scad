@@ -1,8 +1,8 @@
 include <constants.scad>
 
 module button_hole(hole_x_offset, hole_y_offset){
-  BUTTON_HOLE_X = 21;
-  BUTTON_HOLE_Y = 26;
+  BUTTON_HOLE_X = 22;
+  BUTTON_HOLE_Y = 28;
 
   translate([0,0,-0.5])
   linear_extrude(BOX_LID_Z + 1){
