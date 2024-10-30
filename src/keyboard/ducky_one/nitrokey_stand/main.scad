@@ -16,7 +16,8 @@ module main() {
     x_coordinates = i * (STAND_X + 5);
 
     // Position and render each nitrokey part with a unique number label
-    translate([x_coordinates, 0, 0])
+    translate([x_coordinates, 20*i, 0])
+      rotate([90,90,0])
       all(parts[i][0], parts[i][1]);
   }
 }
