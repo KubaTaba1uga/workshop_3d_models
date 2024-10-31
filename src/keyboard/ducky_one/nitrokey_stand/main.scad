@@ -1,40 +1,17 @@
 include <constants.scad>
 
 module main() {
-  parts = [
-    [51, "1"],
-    [53, "2"],	   
-    [55, "3"],
-    [57, "4"],
-    [59, "5"],
-    [61, "6"],
-    [63, "7"],
-  ];
+  all();
 
-  // Iterate over parts to position, rotate, and render each nitrokey and keyboard part
-  for (i = [0 : len(parts) - 1]) {
-    x_coordinates = i * (STAND_X + 5);
-
-    // Position and render each nitrokey part with a unique number label
-    translate([x_coordinates, 20*i, 0])
-      rotate([90,90,0])
-      all(parts[i][0], parts[i][1]);
-  }
 }
 
-module all(desk_part_base_z, number) {
+module all() {
   // Translate and render the part with the base Z height
-  translate([0, 0, desk_part_base_z])
+  translate([0, 0, DESK_DISTANCE_Z])
     nitorkey_and_keyboard_parts();
 
   // Render the desk part
-  desk_part(desk_part_base_z);
-
-  // Render the number label on the part with linear extrude to make it 3D
-  translate([STAND_X/2,  9.9, desk_part_base_z / 2]) // Adjust positioning as needed
-    rotate([90,0,180])
-    linear_extrude(height = 1) // Set the height of the extruded text
-      text(number, size = 5, valign = "center", halign = "center"); // Adjust size as appropriate
+  desk_part();
 }
 
 module nitorkey_and_keyboard_parts(){
@@ -69,9 +46,9 @@ module keyboard_part(){
     square([KEYBOARD_PART_X, KEYBOARD_PART_Y]);
 }
 
-module desk_part(desk_part_base_z){
-  DESK_PART_Z = desk_part_base_z - 1;
-  DESK_PART_X = 10;
+module desk_part(){
+  DESK_PART_Z = DESK_DISTANCE_Z - 1;
+  DESK_PART_X = STAND_X;
   DESK_PART_Y = 10;
 
   linear_extrude(DESK_PART_Z)
