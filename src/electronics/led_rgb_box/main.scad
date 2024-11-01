@@ -3,10 +3,10 @@ include <button_hole.scad>
 
 module main(){
   parts = [
-	   [[1.5,0.1],   "1"],
-	   [[1.6,0.1],   "2"],
-	   [[1.7,0.2],   "3"],
-	   [[1.8,0.2],   "4"],	   	   	   	   
+	   [[0.25, 0.1], "1"],
+	   [[0.5,0.5],   "2"],
+	   [[0.75,0.75], "3"],
+	   [[1,1],       "4"],	   	   	   	   
   ];
 
   difference(){
@@ -31,7 +31,7 @@ module main(){
 
 module box_lid(){
   BOX_LID_X = 122;
-  BOX_LID_Y = 34;
+  BOX_LID_Y = 37;
 
   linear_extrude(BOX_LID_Z){
     square([BOX_LID_X, BOX_LID_Y]);
