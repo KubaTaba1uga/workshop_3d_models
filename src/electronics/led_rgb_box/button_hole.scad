@@ -1,16 +1,13 @@
 include <constants.scad>
 
-module button_hole(hole_x_offset, hole_y_offset){
+module button_hole(hole_x_offset, hole_y_offset){  
   BUTTON_HOLE_X = 22;
   BUTTON_HOLE_Y = 28;
+  BUTTON_HOLE_OFFSET_X = 0.25;
+  BUTTON_HOLE_OFFSET_Y = 0.1;  
 
   translate([0,0,-0.5])
   linear_extrude(BOX_LID_Z + 1){
-    square([BUTTON_HOLE_X + hole_x_offset, BUTTON_HOLE_Y + hole_y_offset]);
+    square([BUTTON_HOLE_X + BUTTON_HOLE_OFFSET_X, BUTTON_HOLE_Y + BUTTON_HOLE_OFFSET_Y]);
   }
-
-  // translate([0,0,-0.5])
-  // linear_extrude(BOX_LID_Z + 1){
-  //   square([BUTTON_HOLE_X, BUTTON_HOLE_Y]);
-  // }  
 }

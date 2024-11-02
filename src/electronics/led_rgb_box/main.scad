@@ -1,12 +1,10 @@
+
 include <constants.scad>
 include <button_hole.scad>
 
 module main(){
   parts = [
 	   [[0.25, 0.1], "1"],
-	   [[0.5,0.5],   "2"],
-	   [[0.75,0.75], "3"],
-	   [[1,1],       "4"],	   	   	   	   
   ];
 
   difference(){
