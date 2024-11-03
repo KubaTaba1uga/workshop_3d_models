@@ -7,10 +7,6 @@ module walls_with_connectors(){
   }
 
   walls();
-
-  translate([0,95,0])
-    rotate([90,0,0])
-  front_wall();
 }
 
 module walls(){
@@ -22,8 +18,9 @@ module walls(){
     difference(){
       square([BOX_LID_X + BOX_LID_X_Y_OFFSET, BOX_LID_Y + BOX_LID_X_Y_OFFSET]);
       
-      translate([WALL_OFFSET, -WALL_OFFSET, 0])
-	square([BOX_LID_X + BOX_LID_X_Y_OFFSET - WALL_X_Y - WALL_OFFSET, BOX_LID_Y + BOX_LID_X_Y_OFFSET - WALL_X_Y + WALL_OFFSET]);
+      translate([WALL_X_Y, -WALL_OFFSET, 0])
+      
+	square([BOX_LID_X + BOX_LID_X_Y_OFFSET - WALL_X_Y*2, BOX_LID_Y + BOX_LID_X_Y_OFFSET - WALL_X_Y + WALL_OFFSET]);
     }
   }
   
@@ -33,19 +30,20 @@ module walls(){
 module connectors(){
   CONNECTOR_X = 5.5;
   CONNECTOR_Y = 5.5;
+  CONNECTOR_OFFSET = 0.5;
   connectors = [
-		[0, 0],
-		[0, BOX_LID_Y + BOX_LID_X_Y_OFFSET - CONNECTOR_Y],
-		[BOX_LID_X + BOX_LID_X_Y_OFFSET - CONNECTOR_X, 0],
-		[BOX_LID_X + BOX_LID_X_Y_OFFSET - CONNECTOR_X, BOX_LID_Y + BOX_LID_X_Y_OFFSET - CONNECTOR_Y],
+       [0, 0],
+       [0, BOX_LID_Y + BOX_LID_X_Y_OFFSET - CONNECTOR_Y],
+       [BOX_LID_X + BOX_LID_X_Y_OFFSET - CONNECTOR_X, 0],
+       [BOX_LID_X + BOX_LID_X_Y_OFFSET - CONNECTOR_X, BOX_LID_Y + BOX_LID_X_Y_OFFSET - CONNECTOR_Y],
   ];
 
 
   for (i = [0 : len(connectors) - 1]) {
     translate([connectors[i][0], connectors[i][1]])
-    translate([0,0,+0.5])
+    translate([0,-CONNECTOR_OFFSET,CONNECTOR_OFFSET])
       linear_extrude(BOX_WALLS_Z + 1){
-      square([CONNECTOR_X, CONNECTOR_Y]);
+      square([CONNECTOR_X, CONNECTOR_Y+CONNECTOR_OFFSET]);
     }
   }  
 }
@@ -62,8 +60,7 @@ module front_wall(){
    
    translate([BOX_LID_X_Y_OFFSET+WALL_X_Y, +WALL_X_Y/2,+0.4]){
      difference(){
-       translate([0,0,-2])
-       linear_extrude(BOX_WALLS_Z + 1.2 + 2){
+       linear_extrude(BOX_WALLS_Z + 1.2){
 	 square([BOX_LID_X-BOX_LID_X_Y_OFFSET-WALL_X_Y*2, WALL_X_Y]);
        }
 

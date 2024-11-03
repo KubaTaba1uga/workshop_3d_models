@@ -23,8 +23,8 @@ module legs_connectors() {
       }
       
       for (i = [0 : len(connectors) - 1]) {
-	translate([0, i*(BOX_LID_Y + BOX_LID_X_Y_OFFSET - LEG_X),0])
-	square([BOX_LID_X + BOX_LID_X_Y_OFFSET, LEG_X]);
+	translate([0, i*(BOX_LID_Y + BOX_LID_X_Y_OFFSET - LEG_X/2),0])
+	square([BOX_LID_X + BOX_LID_X_Y_OFFSET, LEG_X/2]);
       }
 
     }
