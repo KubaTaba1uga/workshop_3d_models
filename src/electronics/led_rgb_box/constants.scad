@@ -1,4 +1,3 @@
-// BOX_LID_Z = 0.5;
 BOX_LID_Z = 2;
 BOX_LID_X = 91.44;
 BOX_LID_Y = 53.34;

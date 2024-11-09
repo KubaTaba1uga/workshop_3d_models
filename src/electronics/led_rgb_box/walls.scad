@@ -3,14 +3,14 @@ include <constants.scad>
 module walls_with_connectors(){
   difference(){
     connectors();
-    front_wall();
+    front_wall(is_hole=true);
   }
 
   walls();
 }
 
 module walls(){
-  WALL_X_Y = 1;
+  WALL_X_Y = 1.5;
   WALL_OFFSET = 0.5;
 
   translate([0,0,WALL_OFFSET])
@@ -48,7 +48,7 @@ module connectors(){
   }  
 }
 
-module front_wall(){
+module front_wall(is_hole=false){
    $fn=100;
    WALL_X_Y = 1;
    holes = [
@@ -61,15 +61,20 @@ module front_wall(){
    translate([BOX_LID_X_Y_OFFSET+WALL_X_Y, +WALL_X_Y/2,+0.4]){
      difference(){
        linear_extrude(BOX_WALLS_Z + 1.2){
-	 square([BOX_LID_X-BOX_LID_X_Y_OFFSET-WALL_X_Y*2, WALL_X_Y]);
+	 if (is_hole){
+	     square([BOX_LID_X-BOX_LID_X_Y_OFFSET-WALL_X_Y*2, WALL_X_Y]);
+	 } else {
+	   translate([WALL_X_Y/2,0,0])
+	     square([BOX_LID_X-BOX_LID_X_Y_OFFSET-WALL_X_Y*3, WALL_X_Y]);
+	 }
        }
 
        translate([-1.5,0,0])
        for (i = [0 : len(holes) - 1]) {       
-	 translate([15.24+holes[i],WALL_X_Y + 0.6,12.5])
+	 translate([BOX_LID_X + BOX_LID_X_Y_OFFSET - (15.24+holes[i]+WALL_X_Y*3),WALL_X_Y + 0.6,12.5])
 	   rotate([90,0,0])
 	   linear_extrude(WALL_X_Y*2){
-	   circle(r=3.5);
+	   circle(r=4.5);
 	 }
        }
      }

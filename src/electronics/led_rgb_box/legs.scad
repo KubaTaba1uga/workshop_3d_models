@@ -21,10 +21,11 @@ module legs_connectors() {
 	translate([connectors[i][0],connectors[i][1],0])
 	square([LEG_X, BOX_LID_Y + BOX_LID_X_Y_OFFSET]);
       }
-      
+
+      TMP_CONNECTOR_X = LEG_X/3;
       for (i = [0 : len(connectors) - 1]) {
-	translate([0, i*(BOX_LID_Y + BOX_LID_X_Y_OFFSET - LEG_X/2),0])
-	square([BOX_LID_X + BOX_LID_X_Y_OFFSET, LEG_X/2]);
+	translate([0, i*(BOX_LID_Y + BOX_LID_X_Y_OFFSET - TMP_CONNECTOR_X),0])
+	square([BOX_LID_X + BOX_LID_X_Y_OFFSET, TMP_CONNECTOR_X]);
       }
 
     }
