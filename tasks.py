@@ -89,7 +89,7 @@ def build(c, files_to_build: list = []):
 
 
 @task
-def open(c, file_path: str):
+def open(c, file_path: str=None):
     """
     Open an OpenSCAD file in OpenSCAD.
 
