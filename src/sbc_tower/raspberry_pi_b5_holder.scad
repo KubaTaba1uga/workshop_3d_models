@@ -1,6 +1,6 @@
 include <platform.scad>
 include <holder.scad>
-include <my_own_lib/orange_pi_5.scad>
+include <my_own_lib/orange_pi_3b.scad>
 
 LEVEL_ID = 1;
 

@@ -34,10 +34,15 @@ module _board_holder(z=0, spike=false, screw=false){
     cylinder(r1=HOLDER_BASE, r2=1, h=local_z);
   if (screw){
     difference(){
-      cylinder(r=HOLDER_BASE, h=local_z);
-      screw_hole("M2,100",atype="shaft",hole_oversize=-0.1);      
+      cylinder(r=HOLDER_BASE+2, h=local_z);
+      screw_hole("M2,100",atype="shaft",hole_oversize=+1.2);      
     }
-
   }
+  if (!spike && !screw){
+    // Default base needs to be a little smaller that screw_hole, this way
+    //   we can create holes for screw heads.
+    cylinder(r=HOLDER_BASE+0.7, h=local_z);
+  }
+  
 
 }
